@@ -69,3 +69,13 @@ def order_commit(request):
 		return JsonResponse({'res':0,'errmsg':'用户未登录'})
 	#接收数据
 	addr_id = request.POST.get('addr_id')
+	pay_method = request.POST.get('pay_method')
+	books_ids = request.POST.get('books_ids')
+	# 进行数据校验
+	if not all([addr_id, pay_method, books_ids]):
+		return JsonResponse({'res': 1, 'errmsg': '数据不完整'})
+	try:
+		addr = Address.objects.get(id=addr_id)
+	except Exception as e:
+		#地址信息出错
+		return JsonResponse({'res':2,'errmsg':'地址信息错误'})
