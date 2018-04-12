@@ -33,10 +33,10 @@ class OrderInfo(BaseModel):
 	addr = models.ForeignKey('users.Address',verbose_name='收货地址')
 	total_count = models.IntegerField(default=1,verbose_name='商品总数')
 	total_price = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='商品总价')
+	transit_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='订单运费')
 	pay_method = models.SmallIntegerField(choices=PAY_METHOD_CHOICES,default=1,verbose_name='支付方式')
 	status = models.SmallIntegerField(choices=ORDER_STATUS_CHOICES,default=1,verbose_name='订单状态')
 	trade_id = models.CharField(max_length=100,unique=True,null=True,blank=True,verbose_name='支付编号')
-
 	objects = OrderInfoManager()
 
 	class Meta:

@@ -7,7 +7,7 @@ class PassportManger(models.Manager):
 	def add_one_passport(self,username,password,email):
 		# 添加一个账户信息
 		passport = self.create(username=username,password=get_hash(password),email=email)
-		return password
+		return passport
 
 	def get_one_passport(self,username,password):
 		# 根据用户名密码查找账户的信息
@@ -17,6 +17,16 @@ class PassportManger(models.Manager):
 			# 账户不存在
 			passport = None
 		return passport
+
+	def check_passport(self,username):
+		try:
+			passport = self.get(username=username)
+		except self.model.DoesNotExist:
+			passport = None
+		if passport:
+			return True
+		return False
+
 
 class Passport(BaseModel):
 	'''用户模型类'''
